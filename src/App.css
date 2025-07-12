@@ -19,6 +19,18 @@
   --base-text-color: #48c4d4;
 }
 
-body {
-  background-color: rgb(196, 33, 169);
+.container {
+  margin: 0 auto;
+  max-width: 1250px;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: white !important;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 25px !important;
+  font-weight: bold !important;
 }

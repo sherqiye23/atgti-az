@@ -4,12 +4,12 @@ export default function ClientFooter() {
             <footer>
                 <div>
                     <div className="bg-white text-center pt-[70px] pb-5">
-                        <div className="text-4xl tracking-wider font-bold text-[var(--base-text-color)]">İNKİŞAF SƏNDƏN BAŞLAYIR!</div>
+                        <div className="text-xl sm:text-2xl md:text-4xl tracking-wider font-bold text-[var(--base-text-color)]">İNKİŞAF SƏNDƏN BAŞLAYIR!</div>
                     </div>
                     <div className="relative flex justify-center items-center">
-                        <img src="/images/footer images/footer-img.jpg" alt="footer-bg" className=" w-full " />
-                        <div className="max-w-[1200px] my-0 mx-auto flex justify-between items-center absolute bottom-[23%] w-full">
-                            <img className="w-[250px]" src="/images/logo/atgti-white.png" alt="logo" />
+                        <img src="/images/footer images/footer-img.jpg" alt="footer-bg" className=" w-full h-[70vh] sm:h-auto" />
+                        <div className="max-w-[1200px] my-0 mx-auto flex justify-between items-center absolute w-full px-5 flex-col sm:flex-row bottom-[5%] lg:bottom-[23%]">
+                            <img className="w-[150px] lg:w-[200px] xl:w-[250px]" src="/images/logo/atgti-white.png" alt="logo" />
                             <div className="text-white flex flex-col">
                                 <span className="text-[var(--base-text-color)] font-semibold uppercase text-lg">Ünvan</span>
 

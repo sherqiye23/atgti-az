@@ -1,56 +1,56 @@
 import { useEffect, useRef, useState } from "react";
-
-interface ArrowLinkInterface {
-    title: string;
-    link?: string;
-    arrowLinks?: string[];
-}
-
-interface NavLinksInterface {
-    title: string;
-    link?: string;
-    hoverLinks?: ArrowLinkInterface[];
-}
+import type { ArrowLinkInterface, NavLinksInterface } from "../../../types/nav.types";
+import { MdChevronRight } from "react-icons/md";
 
 const navLinks: NavLinksInterface[] = [
     {
-        title: "Haqqımızda",
+        title: "HAQQIMIZDA",
         hoverLinks: [
-            { title: "Sərəncam", link: "/serencam" },
-            { title: "Struktur", link: "/struktur" },
-            { title: "Haqqımızda", link: "/haqqimizda" },
+            { title: "SƏRƏNCAM", link: "/" },
+            { title: "STRUKTUR", link: "/" },
+            { title: "HAQQIMIZDA", link: "/" },
             {
-                title: "Nümayəndəliklər",
-                arrowLinks: ["Siyahı", "Struktur"],
-                link: "/numayendelikler",
+                title: "NÜMAYƏNDƏLİKLƏR",
+                arrowLinks: [
+                    { title: "SİYAHI", link: "/" },
+                    { title: "STRUKTUR", link: "/" },
+                ],
+                link: "/",
             },
-            { title: "Fəaliyyət istiqamətləri", link: "/fealiyyet-istiqametleri" },
-            { title: "Təlim materiallarının bazası", link: "/telim-materyallari" },
-            { title: "Tərəfdaşlar", link: "/terefdaslar" },
+            { title: "FƏALİYYƏT İSTİQAMƏTLƏRİ", link: "/" },
+            { title: "TƏLİM MATERİALLARININ BAZASI", link: "/" },
+            { title: "TƏRƏFDAŞLAR", link: "/" },
         ],
     },
-    { title: "Fəaliyyətimiz", link: "/fealiyyetimiz" },
-    { title: "Mətbuatda biz", link: "/metbuatda-biz" },
+    { title: "FƏALİYYƏTİMİZ", link: "/" },
+    { title: "MƏTBUATDA BİZ", link: "/" },
     {
-        title: "Əlaqə",
-        link: "/elaqe",
+        title: "ƏLAQƏ",
+        link: "/",
         hoverLinks: [
-            { title: "Əlaqə", link: "/elaqe" },
+            { title: "ƏLAQƏ", link: "/" },
             {
-                title: "Karyera",
-                arrowLinks: ["İş müraciəti", "Təcrübə proqramları"],
-                link: "/karyera",
+                title: "KARYERA",
+                arrowLinks: [
+                    { title: "İŞ MÜRACİƏTİ", link: "/" },
+                    { title: "TƏCRÜBƏ PROQRAMLARI", link: "/" },
+                ],
+                link: "/",
             },
         ],
     },
 ];
 
 export default function ClientNavbar() {
-    const [logoUrl, setLogoUrl] = useState<boolean>(true) // /images/logo/atgti-color.png
-    const [logoWidth, setLogoWidth] = useState<string>('w-[125px]') // w-[100px]
-    const [textColorClass, setTextColorClass] = useState<string>('text-white') // text-gray-700
-    const [paddingClass, setPaddingClass] = useState<string>('py-5') // py-2
+    const [logoUrl, setLogoUrl] = useState<boolean>(true)
+    const [logoWidth, setLogoWidth] = useState<string>('w-[125px]')
+    const [textColorClass, setTextColorClass] = useState<string>('text-white')
+    const [paddingClass, setPaddingClass] = useState<string>('py-5')
     const navRef = useRef<HTMLDivElement | null>(null);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [activeMobileDropdown, setActiveMobileDropdown] = useState<NavLinksInterface | null>(null);
+    const [activeSubDropdown, setActiveSubDropdown] = useState<ArrowLinkInterface | null>(null);
+
 
     useEffect(() => {
         const handleScroll = () => {
@@ -59,7 +59,7 @@ export default function ClientNavbar() {
             if (scrollPosition > 70) {
                 setLogoUrl(false);
                 setLogoWidth('w-[100px]');
-                setTextColorClass('text-gray-700');
+                setTextColorClass('text-gray-600');
                 setPaddingClass('py-2');
 
                 if (navRef.current) {
@@ -86,7 +86,7 @@ export default function ClientNavbar() {
 
     return (
         <div ref={navRef} className={`fixed w-full top-0 z-10`}>
-            <nav className={` ${paddingClass} px-4 max-w-[1250px] mx-auto flex items-center justify-between`}>
+            <nav className={` ${paddingClass} px-4 container flex items-center justify-between`}>
                 <div className={`${logoWidth}`}>
                     <a href="/">
                         <img
@@ -99,13 +99,13 @@ export default function ClientNavbar() {
                     </a>
                 </div>
 
-                <ul className={`flex gap-6 font-semibold ${textColorClass}`}>
+                <ul className={`gap-6 ${textColorClass} hidden md:flex`}>
                     {navLinks.map((link, idx) => {
                         const hasDropdown = !!link.hoverLinks;
                         return (
                             <li
                                 key={idx}
-                                className={`relative group cursor-pointer uppercase font-bold transition-all duration-200 ease-in hover:text-[var(--base-text-color)]`}
+                                className={`font-semibold relative group cursor-pointer transition-all duration-200 ease-in hover:text-[var(--base-text-color)]`}
                             >
                                 {link.link ? (
                                     <a href={link.link} className="block py-2">
@@ -117,28 +117,27 @@ export default function ClientNavbar() {
 
                                 {/* First dropdown */}
                                 {hasDropdown && (
-                                    <ul className={`absolute top-full mt-1 min-w-[200px] bg-white border border-gray-300 shadow-md opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 z-50 ${link.title == 'Haqqımızda' ? 'left-0' : 'right-0'}`}>
+                                    <ul className={`absolute font-normal text-sm top-full mt-1 min-w-[200px] bg-white shadow-md translate-y-5 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 invisible group-hover:visible  transition-all duration-200 z-50 ${!idx ? 'left-0' : 'right-0'}`}>
                                         {link.hoverLinks!.map((subLink, subIdx) => {
                                             const hasSubDropdown = !!subLink.arrowLinks;
                                             return (
                                                 <li
                                                     key={subIdx}
-                                                    className={`text-gray-700 relative px-4 py-2 hover:bg-gray-100 cursor-pointer whitespace-nowrap ${subLink.title == 'Nümayəndəliklər' || 'Karyera' ? 'group/subDrop' : ''}`}
+                                                    className={`text-gray-500 relative px-4 py-3 bg-gray-100 hover:bg-white cursor-pointer whitespace-nowrap border border-solid border-gray-300 border-l-2 border-l-gray-300 hover:border-l-[var(--base-text-color)] ${subLink?.arrowLinks?.length ? 'group/subDrop' : ''}`}
                                                 >
                                                     {subLink.link ? (
                                                         <a
                                                             href={subLink.link}
-                                                            className={`flex justify-between items-center w-full ${hasSubDropdown ? "pr-4" : ""
-                                                                }`}
+                                                            className={`flex justify-between items-center w-full`}
                                                         >
-                                                            {
-                                                                subLink.title == 'Nümayəndəliklər' ? `${subLink.title} >>` : subLink.title
-                                                            }
+                                                            <span className="w-full flex items-center justify-between">
+                                                                <span>{subLink.title}</span>
+                                                                <span>{subLink?.arrowLinks?.length ? <MdChevronRight /> : ''}</span>
+                                                            </span>
                                                         </a>
                                                     ) : (
                                                         <div
-                                                            className={`flex justify-between items-center w-full ${hasSubDropdown ? "pr-4" : ""
-                                                                }`}
+                                                            className={`flex justify-between items-center w-full`}
                                                         >
                                                             {subLink.title}
                                                         </div>
@@ -147,18 +146,17 @@ export default function ClientNavbar() {
                                                     {/* Second dropdown */}
                                                     {hasSubDropdown && (
                                                         <ul
-                                                            className={`absolute top-0 ml-1 min-w-[180px] bg-white border border-gray-300 shadow-md 
-                                                            opacity-0 invisible transition-all duration-200 z-50
-                                                             group-hover/subDrop:opacity-100 group-hover/subDrop:visible
-                                                            ${link.title == 'Haqqımızda' ? 'left-full' : 'right-full'}`}
+                                                            className={`absolute top-0 ml-1 min-w-[180px] bg-white shadow-md 
+                                                            opacity-0 invisible transition-all duration-200 z-50 group-hover/subDrop:opacity-100 group-hover/subDrop:visible translate-x-5 group-hover/subDrop:translate-x-0
+                                                            ${!idx ? 'left-full' : 'right-full'}`}
                                                         >
                                                             {subLink.arrowLinks!.map((arrowTitle, arrowIdx) => (
                                                                 <li
                                                                     key={arrowIdx}
-                                                                    className="px-4 py-2 hover:bg-gray-100 whitespace-nowrap cursor-pointer"
+                                                                    className="px-4 py-3 bg-gray-100 hover:bg-white text-gray-500 whitespace-nowrap cursor-pointer border border-solid border-gray-300 border-l-2 border-l-gray-300 hover:border-l-[var(--base-text-color)]"
                                                                 >
-                                                                    <a href={`/${arrowTitle.toLowerCase().replace(/ə/g, 'e').replace(/ı/g, 'i').replace(/ö/g, 'o').replace(/ü/g, 'u').replace(/ç/g, 'c').replace(/ş/g, 's').replace(/ /g, '-')}`} className="block">
-                                                                        {arrowTitle}
+                                                                    <a href={arrowTitle.link} className="block">
+                                                                        {arrowTitle.title}
                                                                     </a>
                                                                 </li>
                                                             ))}
@@ -173,6 +171,109 @@ export default function ClientNavbar() {
                         );
                     })}
                 </ul>
+
+                {/* mobile */}
+                <div className="z-10 md:hidden">
+                    <button
+                        onClick={() => setIsMobileMenuOpen(prev => !prev)}
+                        className={`text-3xl ${textColorClass}`}
+                        aria-label="Toggle mobile menu"
+                    >
+                        ☰
+                    </button>
+                </div>
+                {/* Mobile Menu */}
+                {isMobileMenuOpen && !activeMobileDropdown && (
+                    <div className={`fixed left-0 w-full bg-gray-100 shadow-lg z-40 md:hidden animate-slide-down ${logoUrl ? 'top-[145px]' : 'top-[110px]'}`}>
+                        <ul className="flex flex-col divide-y divide-gray-200">
+                            {navLinks.map((link, idx) => (
+                                <li key={idx}>
+                                    <button
+                                        className="text-gray-500 px-4 py-3 bg-gray-100 hover:bg-white cursor-pointer whitespace-nowrap border border-solid border-gray-300 border-l-2 border-l-gray-300 hover:border-l-[var(--base-text-color)] w-full text-left font-semibold flex justify-between items-center"
+                                        onClick={() => {
+                                            if (link.hoverLinks) {
+                                                setActiveMobileDropdown(link);
+                                            } else {
+                                                setIsMobileMenuOpen(false);
+                                                window.location.href = link.link || '/';
+                                            }
+                                        }}
+                                    >
+                                        {link.title}
+                                        {link.hoverLinks && <MdChevronRight />}
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+                {/* Dropdown 2 */}
+                {activeMobileDropdown && (
+                    <div className={`fixed left-0 w-full bg-gray-100 shadow-lg z-40 lg:hidden animate-slide-down ${logoUrl ? 'top-[145px]' : 'top-[110px]'}`}>
+                        <div className="flex items-center px-4 py-3 border-b border-gray-200">
+                            <button
+                                onClick={() => setActiveMobileDropdown(null)}
+                                className="text-gray-600 text-sm flex justify-between items-center w-full"
+                            >
+                                <span className="rotate-180"><MdChevronRight /></span>
+                                <span>Back</span>
+                            </button>
+                        </div>
+                        <ul className="flex flex-col divide-y divide-gray-200">
+                            {activeMobileDropdown.hoverLinks?.map((subLink, subIdx) => (
+                                <li key={subIdx}>
+                                    <button
+                                        className="text-gray-500 px-4 py-3 bg-gray-100 hover:bg-white cursor-pointer whitespace-nowrap border border-solid border-gray-300 border-l-2 border-l-gray-300 hover:border-l-[var(--base-text-color)] w-full text-left font-semibold flex justify-between items-center"
+                                        onClick={() => {
+                                            if (subLink.arrowLinks) {
+                                                setActiveSubDropdown(subLink);
+                                            } else {
+                                                setIsMobileMenuOpen(false);
+                                                setActiveMobileDropdown(null);
+                                                window.location.href = subLink.link || '/';
+                                            }
+                                        }}
+                                    >
+                                        {subLink.title}
+                                        {subLink.arrowLinks && <MdChevronRight />}
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+
+                {/* (arrowLinks)  */}
+                {activeSubDropdown && (
+                    <div className={`fixed left-0 w-full bg-gray-100 shadow-lg z-40 lg:hidden animate-slide-down ${logoUrl ? 'top-[145px]' : 'top-[110px]'}`}>
+                        <div className="flex items-center px-4 py-3 border-b border-gray-200">
+                            <button
+                                onClick={() => setActiveSubDropdown(null)}
+                                className="text-gray-600 text-sm flex justify-between items-center w-full"
+                            >
+                                <span className="rotate-180"><MdChevronRight /></span>
+                                <span>Back</span>
+                            </button>
+                        </div>
+                        <ul className="flex flex-col divide-y divide-gray-200">
+                            {activeSubDropdown.arrowLinks?.map((arrowTitle, idx) => (
+                                <li key={idx}>
+                                    <button
+                                        className="text-gray-500 px-4 py-3 bg-gray-100 hover:bg-white cursor-pointer whitespace-nowrap border border-solid border-gray-300 border-l-2 border-l-gray-300 hover:border-l-[var(--base-text-color)] w-full text-left font-semibold flex justify-between items-center"
+                                        onClick={() => {
+                                            setIsMobileMenuOpen(false);
+                                            setActiveMobileDropdown(null);
+                                            setActiveSubDropdown(null)
+                                            window.location.href = arrowTitle.link || '/';
+                                        }}
+                                    >
+                                        {arrowTitle.title}
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
             </nav>
         </div>
     );
