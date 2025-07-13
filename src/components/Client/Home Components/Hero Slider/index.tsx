@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
-import styles from './HeroSlider.module.css'
 import useWindowWidth from "../../../../hooks/windowWidth.ts";
 
 export default function HeroSlider() {
@@ -118,12 +117,13 @@ export default function HeroSlider() {
                 ))}
             </div>
 
-            <div className={`${styles.dots}`}>
+            <div className={`absolute z-[3] bottom-[2%] right-[30%] flex justify-center gap-[15px] mt-5`}>
                 {images.map((_, i) => (
                     <button
                         key={i}
                         onClick={() => setCurrentImage(i)}
-                        className={`${styles.dot} ${currentImage === i ? `${styles.active}` : ''}`}
+                        className={`w-[10px] h-[60px] rotate-[35deg] border-none cursor-pointer transition-colors duration-300
+                        ${currentImage === i ? `bg-[#e7ff89]` : 'bg-[#7d7d7d]'}`}
                     ></button>
                 ))}
             </div>

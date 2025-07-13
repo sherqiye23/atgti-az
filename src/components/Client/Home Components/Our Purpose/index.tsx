@@ -1,7 +1,7 @@
 export default function OurPurpose() {
     return (
         <>
-            <div className="bg-[url('https://gikm.az/wp-content/uploads/2020/08/239ey.jpg')] h-[100vh] bg-no-repeat bg-cover flex items-center">
+            <div className="bg-[url('/images/our-purpose/our-purpose.jpg')] h-[100vh] bg-no-repeat bg-cover flex items-center">
                 <div className="max-w-[600px] flex flex-col sm:gap-5 pl-[20px]">
                     <p className="font-bold md:text-2xl">STRATEJİ BAXIŞ</p>
                     <div>
@@ -32,7 +32,6 @@ export default function OurPurpose() {
                             İttifaqın fəaliyyətində effektivlik və davamlı inkişafın təmin olunması</p>
                     </div>
                 </div>
-                {/* </div> */}
             </div>
         </>
     )
