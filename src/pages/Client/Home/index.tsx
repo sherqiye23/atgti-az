@@ -5,8 +5,7 @@ import OurPurpose from "../../../components/Client/Home Components/Our Purpose";
 export default function HomePage() {
     return (
         <>
-            <div className="h-[50vh] bg-gray-500"></div>
-            {/* <HeroSlider/> */}
+            <HeroSlider />
             <OurPurpose />
             <InspirationSection />
         </>
