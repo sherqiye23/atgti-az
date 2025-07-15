@@ -13,8 +13,8 @@ export default function HeroSlider() {
     ]
 
     const texts: string[] = [
-        "İki ildən bir keçirilən Azərbaycan Tələbə Gənclər Təşkilatları İttifaqının Hesabat-Seçki Konfransı",
-        "Tələbə auditoriyasını hədəfləyən və on minlərlə gənci bir araya gətirən festivallar",
+        "İki ildən bir keçirilən Azərbaycan Tələbə Gənclər Təşkilatları İttifaqının Hesabat-Seçki Konfransı.",
+        "Tələbə auditoriyasını hədəfləyən və on minlərlə gənci bir araya gətirən festivallar.",
         "“Bizim bugünkü gəncliyimiz sağlam düşüncəli gənclikdir, vətənpərvər gənclikdir, xalqını, millətini sevən gənclikdir.”",
         "Sən də bu enerjiyə qoşul!",
         "Əylən, öyrən, təşkil et!",
@@ -28,7 +28,6 @@ export default function HeroSlider() {
     const windowWidth = useWindowWidth();
     const sliceCount = windowWidth < 768 ? 2 : 5;
     const sliceWidth = 100 / sliceCount;
-    const backgroundSize = `${sliceCount * 100}% 130%`;
 
     const textRef = useRef<(HTMLSpanElement | null)[]>([]);
 
@@ -41,7 +40,7 @@ export default function HeroSlider() {
         return () => clearInterval(interval);
     }, []);
 
-    const animateSlices = () => {
+    useEffect(() => {
         gsap.fromTo(
             sliceRefs.current,
             { y: "-100%", opacity: 0 },
@@ -56,11 +55,6 @@ export default function HeroSlider() {
                 ease: "power3.out"
             }
         );
-    };
-
-
-    useEffect(() => {
-        animateSlices();
     }, [currentImage]);
 
     useEffect(() => {
@@ -85,26 +79,30 @@ export default function HeroSlider() {
 
 
     return (
-        <div key={currentImage} className={`relative w-full h-[95vh] overflow-hidden bg-cover bg-center bg-no-repeat `}
+        <div key={currentImage} className={`relative w-full h-[95vh] overflow-hidden bg-cover bg-center bg-no-repeat transition-all duration-1000 ease-in-out`}
             style={{
                 backgroundImage: `url(${images[(currentImage - 1 + totalSlides) % totalSlides]})`,
             }}>
             {[...Array(sliceCount)].map((_, i) => (
                 <div
                     key={i}
-                    className={`absolute top-0 h-full bg-cover bg-no-repeat`}
-                    ref={(el) => { sliceRefs.current[i] = el; }}
+                    className="absolute top-0 h-full overflow-hidden bg-cover bg-center bg-no-repeat"
                     style={{
                         width: `${sliceWidth}%`,
                         left: `${i * sliceWidth}%`,
                         backgroundImage: `url(${images[currentImage]})`,
-                        backgroundSize: backgroundSize,
-                        backgroundPositionX: `${i * (100 / (sliceCount - 1))}%`,
-                        backgroundPositionY: "center",
+                        backgroundSize: `${sliceCount * 100}% 100%`,
+                        backgroundPosition: `${(i * 100) / (sliceCount - 1)}% center`,
                     }}
-                ></div>
+                    ref={(el) => { sliceRefs.current[i] = el; }}
+                >
+                </div> 
             ))}
+
+
+
             <div className="absolute inset-0 bg-blue-900 opacity-40 z-1"></div>
+
             <div className="absolute top-[30%] left-[8%] sm:left-[15%] right-[13%] sm:right-[20%] text-xl sm:text-2xl md:text-3xl lg:text-5xl font-bold text-white flex flex-wrap gap-x-2">
                 {texts[currentImage].split(" ").map((word, i) => (
                     <span
