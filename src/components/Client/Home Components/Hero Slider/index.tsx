@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
-import useWindowWidth from "../../../../hooks/windowWidth.ts";
+// import useWindowWidth from "../../../../hooks/windowWidth.ts";
 
 export default function HeroSlider() {
     const images: string[] = [
@@ -25,8 +25,9 @@ export default function HeroSlider() {
     const sliceRefs = useRef<(HTMLDivElement | null)[]>([]);
     const totalSlides: number = images.length;
 
-    const windowWidth = useWindowWidth();
-    const sliceCount = windowWidth < 768 ? 2 : 5;
+    // const windowWidth = useWindowWidth();
+    // const sliceCount = windowWidth < 768 ? 2 : 5;
+    const sliceCount = 5;
     const sliceWidth = 100 / sliceCount;
 
     const textRef = useRef<(HTMLSpanElement | null)[]>([]);
@@ -98,8 +99,6 @@ export default function HeroSlider() {
                 >
                 </div> 
             ))}
-
-
 
             <div className="absolute inset-0 bg-blue-900 opacity-40 z-1"></div>
 

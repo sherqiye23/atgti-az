@@ -25,7 +25,10 @@ export default function ScrollButton() {
 
     return (
         <>
-            <div ref={scrollButton} className="fixed bottom-[5%] right-[3%] w-[50px] h-[50px] flex justify-center items-center bg-black transition-all ease-out duration-200">
+            <div ref={scrollButton} className="fixed bottom-[5%] right-[3%] w-[50px] h-[50px] flex justify-center items-center bg-black transition-all ease-out duration-200"
+                style={{
+                    opacity: '0'
+                }}>
                 <span className="text-white -rotate-90 text-2xl"><MdChevronRight /></span>
             </div>
         </>
