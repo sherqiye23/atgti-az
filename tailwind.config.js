@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        'xs': '450px',
+      },
       animation: {
         'slide-down': 'slideDown 0.5s ease-out',
       },

@@ -78,9 +78,8 @@ export default function HeroSlider() {
     }, [currentImage]);
 
 
-
     return (
-        <div key={currentImage} className={`relative w-full h-[95vh] overflow-hidden bg-cover bg-center bg-no-repeat transition-all duration-1000 ease-in-out`}
+        <div key={currentImage} className={`relative w-full h-[50vh] md:h-[95vh] overflow-hidden bg-cover bg-center bg-no-repeat transition-all duration-1000 ease-in-out`}
             style={{
                 backgroundImage: `url(${images[(currentImage - 1 + totalSlides) % totalSlides]})`,
             }}>
@@ -102,7 +101,7 @@ export default function HeroSlider() {
 
             <div className="absolute inset-0 bg-blue-900 opacity-40 z-1"></div>
 
-            <div className="absolute top-[30%] left-[8%] sm:left-[15%] right-[13%] sm:right-[20%] text-xl sm:text-2xl md:text-3xl lg:text-5xl font-bold text-white flex flex-wrap gap-x-2">
+            <div className="absolute top-[40%] sm:top-[30%] left-[8%] sm:left-[15%] right-[13%] sm:right-[20%] text-lg sm:text-2xl md:text-3xl lg:text-5xl font-bold text-white flex flex-wrap gap-x-2">
                 {texts[currentImage].split(" ").map((word, i) => (
                     <span
                         key={i}

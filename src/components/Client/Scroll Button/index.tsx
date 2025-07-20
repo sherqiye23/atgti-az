@@ -4,6 +4,10 @@ import { MdChevronRight } from "react-icons/md";
 export default function ScrollButton() {
     const scrollButton = useRef<HTMLDivElement | null>(null);
 
+    const handleClick = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
     useEffect(() => {
         const handleScroll = () => {
             const scrollPosition = window.scrollY;
@@ -25,7 +29,10 @@ export default function ScrollButton() {
 
     return (
         <>
-            <div ref={scrollButton} className="fixed bottom-[5%] right-[3%] w-[50px] h-[50px] flex justify-center items-center bg-black transition-all ease-out duration-200"
+            <div
+                ref={scrollButton}
+                onClick={handleClick}
+                className="fixed bottom-[5%] right-[3%] w-[50px] h-[50px] flex justify-center items-center bg-black transition-all ease-out duration-200 cursor-pointer"
                 style={{
                     opacity: '0'
                 }}>

@@ -47,6 +47,7 @@ export default function ClientNavbar() {
     const [textColorClass, setTextColorClass] = useState<string>('text-white')
     const [paddingClass, setPaddingClass] = useState<string>('py-5')
     const navRef = useRef<HTMLDivElement | null>(null);
+
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [activeMobileDropdown, setActiveMobileDropdown] = useState<NavLinksInterface | null>(null);
     const [activeSubDropdown, setActiveSubDropdown] = useState<ArrowLinkInterface | null>(null);
@@ -175,7 +176,11 @@ export default function ClientNavbar() {
                 {/* mobile */}
                 <div className="z-10 md:hidden">
                     <button
-                        onClick={() => setIsMobileMenuOpen(prev => !prev)}
+                        onClick={() => {
+                            setIsMobileMenuOpen(prev => !prev);
+                            setActiveMobileDropdown(null)
+                            setActiveSubDropdown(null)
+                        }}
                         className={`text-3xl ${textColorClass}`}
                         aria-label="Toggle mobile menu"
                     >
