@@ -1,5 +1,6 @@
 import ClientLayout from "../pages/Client/ClientLayout";
 import HomePage from "../pages/Client/Home";
+import NotFoundPage from "../pages/Client/NotFoundPage";
 
 const ROUTES = [
     {
@@ -10,6 +11,14 @@ const ROUTES = [
                 path: '',
                 element: <HomePage />,
             },
+            {
+                path: '/justified-grids/mətbuatda-biz/',
+                element: <HomePage />,
+            },
+            {
+                path: '*',
+                element: <NotFoundPage />
+            }
         ]
     }
 ]

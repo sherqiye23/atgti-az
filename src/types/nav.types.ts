@@ -10,3 +10,7 @@ export interface ArrowLinkInterface extends Navigation {
 export interface NavLinksInterface extends Navigation {
     hoverLinks?: ArrowLinkInterface[];
 }
+
+export type PropsNavbar = {
+    location: boolean;
+};

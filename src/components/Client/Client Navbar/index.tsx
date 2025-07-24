@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import type { ArrowLinkInterface, NavLinksInterface } from "../../../types/nav.types";
+import type { ArrowLinkInterface, NavLinksInterface, PropsNavbar } from "../../../types/nav.types";
 import { MdChevronRight } from "react-icons/md";
+import { IoLocationOutline } from "react-icons/io5";
+import { MdPhone } from "react-icons/md";
+import { RiFacebookFill, RiLinkedinFill, RiTwitterXFill, RiInstagramLine, RiYoutubeFill } from "react-icons/ri";
+import { useLocation } from "react-router";
 
 const navLinks: NavLinksInterface[] = [
     {
@@ -41,7 +45,10 @@ const navLinks: NavLinksInterface[] = [
     },
 ];
 
-export default function ClientNavbar() {
+export default function ClientNavbar({ location }: PropsNavbar) {
+    const pathLocation = useLocation()
+    const isHomePage = pathLocation.pathname === "/";
+
     const [logoUrl, setLogoUrl] = useState<boolean>(true)
     const [logoWidth, setLogoWidth] = useState<string>('w-[125px]')
     const [textColorClass, setTextColorClass] = useState<string>('text-white')
@@ -87,12 +94,58 @@ export default function ClientNavbar() {
 
     return (
         <div ref={navRef} className={`fixed w-full top-0 z-10`}>
+            {
+                !location ? (
+                    <div className="border-0 border-solid border-t-[4px] border-t-[var(--base-text-color)] border-b-[1px] border-b-[#e4e4e4] bg-[#f4f6f7e4]">
+                        <div className="container px-4 text-gray-500 gap-1 md:gap-7 flex md:items-center flex-col md:flex-row">
+                            <div className="flex gap-1 xs:gap-7 py-1 sm:py-3 flex-col xs:flex-row">
+                                <div className="flex items-center gap-1">
+                                    <span><IoLocationOutline /></span>
+                                    <span className="text-sm">C.Cabbarlı küç., 609, Globus Center</span>
+                                </div>
+                                <div className="flex items-center gap-1">
+                                    <span><MdPhone /></span>
+                                    <span className="cursor-pointer text-sm transition-all duration-250 ease-in hover:text-[var(--base-text-color)]">+994 12 597 56 30</span>
+                                </div>
+                            </div>
+                            <div className="flex gap-3 sm:gap-7 md:items-center">
+                                <div className="h-[50px] w-[2px] bg-[#e4e4e4] hidden md:block"></div>
+                                <div className="flex items-center md:justify-center gap-3 cursor-pointer">
+                                    {
+                                        [<RiFacebookFill />, <RiLinkedinFill />, <RiTwitterXFill />, <RiInstagramLine />, <RiYoutubeFill />].map((icon, i) => (
+                                            <span key={i}
+                                                className={`transition-all duration-250 ease-in text-lg
+                                    ${i == 0 ? 'hover:text-blue-700'
+                                                        : i == 1 ? 'hover:text-cyan-600'
+                                                            : i == 2 ? 'hover:text-gray-400'
+                                                                : i == 3 ? 'hover:text-yellow-600'
+                                                                    : 'hover:text-red-700'
+                                                    }`}>
+                                                {icon}
+                                            </span>
+                                        ))
+                                    }
+                                </div>
+                                <div className="h-[50px] w-[2px] bg-[#e4e4e4] hidden md:block"></div>
+                                <div>
+                                    <button className="bg-[#494c64] hover:bg-[var(--base-text-color)] transition-all duration-250 ease-in text-white rounded-md text-xs font-semibold py-2 px-4">Sorğu</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ) : null
+            }
+
             <nav className={` ${paddingClass} px-4 container flex items-center justify-between`}>
                 <div className={`${logoWidth}`}>
                     <a href="/">
                         <img
                             key={logoUrl ? 'white' : 'color'}
-                            src={logoUrl ? '/images/logo/atgti-white.png' : '/images/logo/atgti-color.png'}
+                            src={
+                                isHomePage ? (
+                                    logoUrl ? '/images/logo/atgti-white.png' : '/images/logo/atgti-color.png'
+                                ) : ('/images/logo/atgti-color.png')
+                            }
                             alt="logo"
                             className="w-full transition-all duration-300"
                             draggable={false}
@@ -100,7 +153,7 @@ export default function ClientNavbar() {
                     </a>
                 </div>
 
-                <ul className={`gap-6 ${textColorClass} hidden md:flex`}>
+                <ul className={`gap-6 ${isHomePage ? textColorClass : 'text-gray-600'} hidden md:flex`}>
                     {navLinks.map((link, idx) => {
                         const hasDropdown = !!link.hoverLinks;
                         return (
@@ -181,7 +234,7 @@ export default function ClientNavbar() {
                             setActiveMobileDropdown(null)
                             setActiveSubDropdown(null)
                         }}
-                        className={`text-3xl ${textColorClass}`}
+                        className={`text-3xl ${isHomePage ? textColorClass : 'text-gray-600'}`}
                         aria-label="Toggle mobile menu"
                     >
                         ☰
@@ -189,7 +242,8 @@ export default function ClientNavbar() {
                 </div>
                 {/* Mobile Menu */}
                 {isMobileMenuOpen && !activeMobileDropdown && (
-                    <div className={`fixed left-0 w-full bg-gray-100 shadow-lg z-40 md:hidden animate-slide-down ${logoUrl ? 'top-[145px]' : 'top-[110px]'}`}>
+                    <div className={`fixed left-0 w-full bg-gray-100 shadow-lg z-40 md:hidden animate-slide-down 
+                        ${isHomePage ? (logoUrl ? 'top-[145px]' : 'top-[110px]') : (paddingClass === 'py-5' ? 'top-[230px]' : 'top-[200px]')}`}>
                         <ul className="flex flex-col divide-y divide-gray-200">
                             {navLinks.map((link, idx) => (
                                 <li key={idx}>
@@ -214,7 +268,8 @@ export default function ClientNavbar() {
                 )}
                 {/* Dropdown 2 */}
                 {activeMobileDropdown && (
-                    <div className={`fixed left-0 w-full bg-gray-100 shadow-lg z-40 lg:hidden animate-slide-down ${logoUrl ? 'top-[145px]' : 'top-[110px]'}`}>
+                    <div className={`fixed left-0 w-full bg-gray-100 shadow-lg z-40 lg:hidden animate-slide-down 
+                    ${isHomePage ? (logoUrl ? 'top-[145px]' : 'top-[110px]') : (paddingClass === 'py-5' ? 'top-[230px]' : 'top-[200px]')}`}>
                         <div className="flex items-center px-4 py-3 border-b border-gray-200">
                             <button
                                 onClick={() => setActiveMobileDropdown(null)}
@@ -250,7 +305,8 @@ export default function ClientNavbar() {
 
                 {/* (arrowLinks)  */}
                 {activeSubDropdown && (
-                    <div className={`fixed left-0 w-full bg-gray-100 shadow-lg z-40 lg:hidden animate-slide-down ${logoUrl ? 'top-[145px]' : 'top-[110px]'}`}>
+                    <div className={`fixed left-0 w-full bg-gray-100 shadow-lg z-40 lg:hidden animate-slide-down 
+                    ${isHomePage ? (logoUrl ? 'top-[145px]' : 'top-[110px]') : (paddingClass === 'py-5' ? 'top-[230px]' : 'top-[200px]')}`}>
                         <div className="flex items-center px-4 py-3 border-b border-gray-200">
                             <button
                                 onClick={() => setActiveSubDropdown(null)}
