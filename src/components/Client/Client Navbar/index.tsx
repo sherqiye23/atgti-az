@@ -4,7 +4,7 @@ import { MdChevronRight } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdPhone } from "react-icons/md";
 import { RiFacebookFill, RiLinkedinFill, RiTwitterXFill, RiInstagramLine, RiYoutubeFill } from "react-icons/ri";
-import { useLocation } from "react-router";
+import { NavLink, useLocation } from "react-router";
 
 const navLinks: NavLinksInterface[] = [
     {
@@ -19,27 +19,26 @@ const navLinks: NavLinksInterface[] = [
                     { title: "SİYAHI", link: "/" },
                     { title: "STRUKTUR", link: "/" },
                 ],
-                link: "/",
+                link: "#",
             },
             { title: "FƏALİYYƏT İSTİQAMƏTLƏRİ", link: "/" },
             { title: "TƏLİM MATERİALLARININ BAZASI", link: "/" },
             { title: "TƏRƏFDAŞLAR", link: "/" },
         ],
     },
-    { title: "FƏALİYYƏTİMİZ", link: "/" },
-    { title: "MƏTBUATDA BİZ", link: "/" },
+    { title: "FƏALİYYƏTİMİZ", link: "/justified-grids/fealiyyetimiz/" },
+    { title: "MƏTBUATDA BİZ", link: "/justified-grids/mətbuatda-biz/" },
     {
         title: "ƏLAQƏ",
-        link: "/",
         hoverLinks: [
-            { title: "ƏLAQƏ", link: "/" },
+            { title: "ƏLAQƏ", link: '/' },
             {
                 title: "KARYERA",
                 arrowLinks: [
-                    { title: "İŞ MÜRACİƏTİ", link: "/" },
-                    { title: "TƏCRÜBƏ PROQRAMLARI", link: "/" },
+                    { title: "İŞ MÜRACİƏTİ", link: "/is-muracieti" },
+                    { title: "TƏCRÜBƏ PROQRAMLARI", link: "/tecrbe-proqramlari" },
                 ],
-                link: "/",
+                link: "#",
             },
         ],
     },
@@ -115,7 +114,7 @@ export default function ClientNavbar({ location }: PropsNavbar) {
                                         [<RiFacebookFill />, <RiLinkedinFill />, <RiTwitterXFill />, <RiInstagramLine />, <RiYoutubeFill />].map((icon, i) => (
                                             <span key={i}
                                                 className={`transition-all duration-250 ease-in text-lg
-                                    ${i == 0 ? 'hover:text-blue-700'
+                                                    ${i == 0 ? 'hover:text-blue-700'
                                                         : i == 1 ? 'hover:text-cyan-600'
                                                             : i == 2 ? 'hover:text-gray-400'
                                                                 : i == 3 ? 'hover:text-yellow-600'
@@ -153,7 +152,7 @@ export default function ClientNavbar({ location }: PropsNavbar) {
                     </a>
                 </div>
 
-                <ul className={`gap-6 ${isHomePage ? textColorClass : 'text-gray-600'} hidden md:flex`}>
+                <ul className={`gap-3 ${isHomePage ? textColorClass : 'text-gray-600'} hidden md:flex`}>
                     {navLinks.map((link, idx) => {
                         const hasDropdown = !!link.hoverLinks;
                         return (
@@ -162,11 +161,13 @@ export default function ClientNavbar({ location }: PropsNavbar) {
                                 className={`font-semibold relative group cursor-pointer transition-all duration-200 ease-in hover:text-[var(--base-text-color)]`}
                             >
                                 {link.link ? (
-                                    <a href={link.link} className="block py-2">
-                                        {link.title}
-                                    </a>
+                                    <NavLink to={link.link}>
+                                        {({ isActive }) => (
+                                            <span className={`${isActive ? "border border-solid" : ""} block py-1 px-2`}>{link.title}</span>
+                                        )}
+                                    </NavLink>
                                 ) : (
-                                    <div className="py-2">{link.title}</div>
+                                    <div className="px-2 py-1">{link.title}</div>
                                 )}
 
                                 {/* First dropdown */}
