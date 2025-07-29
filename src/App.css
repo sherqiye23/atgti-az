@@ -34,3 +34,8 @@
   font-weight: bold !important;
 }
 
+.animate-section.visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
