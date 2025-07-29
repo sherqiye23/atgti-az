@@ -4,3 +4,4 @@ export type fakeData = {
     description: string,
     readMoreLink: string
 }
+// sonradan deyişilecek bunlar
