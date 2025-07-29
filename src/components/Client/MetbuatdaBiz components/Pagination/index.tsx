@@ -2,16 +2,14 @@ import Pagination from '@mui/material/Pagination';
 import type { fakeData } from '../../../../types/metbuatdabiz.types';
 
 type PaginationComponentProps = {
-    data: fakeData[]; 
+    data: fakeData[];
     itemsPerPage: number;
     currentPage: number,
     setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export default function PaginationComponent({ data, itemsPerPage, currentPage, setCurrentPage }: PaginationComponentProps) {
-    // const [currentPage, setCurrentPage] = useState(1);
-
-    const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    const handlePageChange = (_: unknown, value: number) => {
         setCurrentPage(value);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
